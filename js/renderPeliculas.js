@@ -33,5 +33,26 @@ export function displayPeliculas(){
 
 function mostrarDetallesPelicula(event){
     const idPelicula = event.target.getAttribute('data-id')
-    alert("Mostrar detalles de la pelicula: " + idPelicula)
+    const peliculas = getPeliculas()
+    const pelicula = peliculas.find(p => p.id.toString() === idPelicula)
+    const detallesHtml = `
+        <!DOCTYPE html>
+            <html lang="es">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>${pelicula.title}</title>
+            </head>
+            <body>
+                <div class="detalles-pelicula">
+                    <h1>${pelicula.title}</h1>
+                    <img src="peliculaPoster" alt="tituloPelicula">
+                    <p>Fecha de lanzamiento: ${pelicula.release_date}</p>
+                </div>
+            </body>
+            </html>
+    `
+    const blob = new Blob([detallesHtml], {type: 'text/html'})
+    const url = URL.createObjectURL(blob)
+    window.open(url, '_blank')
 }
